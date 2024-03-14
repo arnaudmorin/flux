@@ -1,0 +1,33 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-flask
+  labels:
+    app: demo-flask
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: demo-flask
+  template:
+    metadata:
+      labels:
+        app: demo-flask
+    spec:
+      containers:
+      - name: demo-flask
+        image: arnaudmorin/demo-flask
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-flask
+spec:
+  ports:
+  - port: 8080
+    targetPort: 8080
+  selector:
+    app: demo-flask
+  type: LoadBalancer
